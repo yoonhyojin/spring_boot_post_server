@@ -33,5 +33,6 @@ data class PostResponseDto(
     var title : String,
     var post : String,
     var userId : Long,
-    var isPublic : Boolean
+    var isPublic : Boolean,
+    var comments : List<CommentResponseDto>?
 )
