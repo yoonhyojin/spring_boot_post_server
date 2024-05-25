@@ -4,6 +4,7 @@ import com.example.msyql_example.common.dto.BaseResponse
 import com.example.msyql_example.post.dto.PostRequestDto
 import com.example.msyql_example.post.dto.PostResponseDto
 import com.example.msyql_example.post.service.PostService
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -43,10 +44,20 @@ class PostController {
     }
 
     /**
+     * 사용자 ID에 해당하는 게시글 가져오는 Api
+     */
+    @GetMapping("/user/{id}")
+    private fun getPostByUserId(@PathVariable id : Long) :
+            ResponseEntity<BaseResponse<PostResponseDto>> {
+        val result = postService.getPostByUserId(id)
+        return ResponseEntity.status(HttpStatus.OK).body(BaseResponse(data = result))
+    }
+
+    /**
      * 게시글을 생성하는 Api
      */
     @PostMapping
-    private fun postPost(@RequestBody postRequestDto: PostRequestDto) :
+    private fun postPost(@Valid @RequestBody postRequestDto: PostRequestDto) :
             ResponseEntity<BaseResponse<PostResponseDto>> {
         val result = postService.postPosts(postRequestDto)
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponse(data = result))
@@ -56,7 +67,7 @@ class PostController {
      * 게시글 수정 Api
      */
     @PutMapping("/{id}")
-    private fun putPost(@RequestBody postRequestDto: PostRequestDto, @PathVariable id : Long) :
+    private fun putPost(@Valid @RequestBody postRequestDto: PostRequestDto, @PathVariable id : Long) :
             ResponseEntity<BaseResponse<PostResponseDto>> {
         val result = postService.putPost(postRequestDto, id)
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponse(data = result))

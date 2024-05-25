@@ -13,6 +13,25 @@ import org.springframework.web.servlet.NoHandlerFoundException
 @RestControllerAdvice
 class CommonExceptionHandler {
 
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    protected fun methodArgumentNotValidExceptionHandler(
+        exception: MethodArgumentNotValidException
+    ) : ResponseEntity<BaseResponse<Map<String, String>>> {
+        var errors = mutableMapOf<String, String>()
+        exception.bindingResult.allErrors.forEach { error ->
+            val fieldName = (error as FieldError).field
+            val errorMsg = error.defaultMessage
+            errors[fieldName] = errorMsg ?: "에러 메시지가 존재하지 않습니다!"
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+            BaseResponse(
+                status = ResultStatus.ERROR.name,
+                data = errors,
+                resultMsg = ResultStatus.ERROR.msg,
+            )
+        )
+    }
+
     @ExceptionHandler(NoHandlerFoundException::class)
     protected fun notFoundApiUrlExceptionHandler(exception: NoHandlerFoundException) :
         ResponseEntity<BaseResponse<Any>> {

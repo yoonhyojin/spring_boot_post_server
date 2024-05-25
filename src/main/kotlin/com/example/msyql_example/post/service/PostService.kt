@@ -39,6 +39,15 @@ class PostService {
     }
 
     /**
+     * 사용자 ID로 게시글 가져오는 메소드
+     */
+    fun getPostByUserId(id : Long) : PostResponseDto {
+        val result = postRepository.findByUserId(id)
+            ?: throw PostException(msg = "해당 게시글이 존재하지 않습니다!")
+        return result.toResponse()
+    }
+
+    /**
      * 새로운 게시글 생성 후 결과를 반환함.
      */
     fun postPosts(postRequestDto: PostRequestDto) : PostResponseDto {
