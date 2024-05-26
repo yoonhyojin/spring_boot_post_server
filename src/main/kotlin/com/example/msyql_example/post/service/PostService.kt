@@ -24,7 +24,7 @@ class PostService {
      * 모든 게시글을 가져옴.
      */
     fun getPosts() : List<PostResponseDto> {
-        val result = postRepository.findAll()
+        val result = postRepository.findAllByFetchJoin()
         return result.map { it.toResponse() }
     }
 

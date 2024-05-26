@@ -22,6 +22,9 @@ class CommentController {
     @Autowired
     private lateinit var commentService: CommentService
 
+    /**
+     * 전체 댓글 조회 Api
+     */
     @GetMapping
     private fun getComments() :
             ResponseEntity<BaseResponse<List<CommentResponseDto>>> {
@@ -30,6 +33,9 @@ class CommentController {
             .status(HttpStatus.OK).body(BaseResponse(data = result))
     }
 
+    /**
+     * 게시판 댓글 등록 Api
+     */
     @PostMapping("/{id}")
     private fun postComment(@PathVariable id : Long, @RequestBody commentRequestDto: CommentRequestDto) :
             ResponseEntity<BaseResponse<CommentResponseDto>> {
