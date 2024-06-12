@@ -29,4 +29,7 @@ class Member(
     @Column(nullable = false, length = 5)
     @Enumerated(EnumType.STRING)
     val gender : Gender,
-)
+) {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    val role : List<MemberRole>? = null
+}
