@@ -6,10 +6,12 @@ import com.example.msyql_example.common.enums.Role
 import com.example.msyql_example.common.exception.member.InvalidEmailException
 import com.example.msyql_example.member.dto.LoginDto
 import com.example.msyql_example.member.dto.MemberRequestDto
+import com.example.msyql_example.member.dto.MemberResponseDto
 import com.example.msyql_example.member.entity.Member
 import com.example.msyql_example.member.entity.MemberRole
 import com.example.msyql_example.member.repository.MemberRepository
 import com.example.msyql_example.member.repository.MemberRoleRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.stereotype.Service
@@ -48,5 +50,12 @@ class MemberService(
         val authenticationToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
         val authentication = authenticationManagerBuilder.`object`.authenticate(authenticationToken)
         return jwtTokenProvider.createToken(authentication)
+    }
+
+    // ㄴㅐ 정보 조회
+    fun searchMyInfo(id : Long) : MemberResponseDto {
+        val member = memberRepository.findByIdOrNull(id)
+            ?: throw RuntimeException("존재하지 않는 사용자입니다.")
+        return member.toResponse()
     }
 }

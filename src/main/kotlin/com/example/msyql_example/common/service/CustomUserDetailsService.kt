@@ -1,5 +1,6 @@
 package com.example.msyql_example.common.service
 
+import com.example.msyql_example.common.dto.CustomUser
 import com.example.msyql_example.member.entity.Member
 import com.example.msyql_example.member.repository.MemberRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -22,7 +23,8 @@ class CustomUserDetailsService(
     }
 
     private fun createUserDetails(member : Member) : UserDetails {
-        return User(
+        return CustomUser(
+            member.id!!,
             member.email,
             passwordEncoder.encode(member.password),
             member.role!!.map { SimpleGrantedAuthority("ROLE_${it.role}") }

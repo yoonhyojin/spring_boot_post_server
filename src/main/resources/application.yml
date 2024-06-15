@@ -8,9 +8,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/human_db?autoReconnect=true&useUnicode=true&serverTimezone=Asia/Seoul
-    username: hsw
-    password: hsw
+    url: jdbc:mysql://mysql-containergi:3306/post_db?autoReconnect=true&useUnicode=true&serverTimezone=Asia/Seoul
+    username: yhj
+    password: yhj
 
   jpa:
     database: mysql
