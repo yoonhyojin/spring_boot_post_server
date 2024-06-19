@@ -7,12 +7,16 @@ import com.example.msyql_example.member.dto.LoginDto
 import com.example.msyql_example.member.dto.MemberRequestDto
 import com.example.msyql_example.member.dto.MemberResponseDto
 import com.example.msyql_example.member.service.MemberService
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.security.SecurityScheme
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
 
+@Tag(name = "회원 Api 컨트롤러", description =  "회원가입, 로그인, 내정보 조회 Api 명세서입니다.")
 @RestController
 @RequestMapping("/api/member")
 class MemberController(
@@ -40,6 +44,7 @@ class MemberController(
             .body(BaseResponse(data = tokenInfo))
     }
 
+    @SecurityRequirement(name = "BearerAuth")
     //내 정보 조회 api
     @GetMapping("/info/{id}")
     private fun searchMyInfo(@PathVariable id : Long)

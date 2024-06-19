@@ -5,6 +5,8 @@ import com.example.msyql_example.post.dto.CommentRequestDto
 import com.example.msyql_example.post.dto.CommentResponseDto
 import com.example.msyql_example.post.service.CommentService
 import com.fasterxml.jackson.databind.ser.Serializers.Base
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+@SecurityRequirement(name = "BearerAuth")
+@Tag(name = "댓글 Api 컨트롤러", description =  "댓글 등록, 조회 Api 명세서입니다.")
 @RestController
 @RequestMapping("/api/posts/comments")
 class CommentController {
